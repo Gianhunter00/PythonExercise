@@ -2,31 +2,35 @@
 #to review, probably interpreted wrong
 class SparseArray(object):
     def __init__(self, args):
-        self.sparse_array = args
+        self.length = len(args)
+        self.dict = {key: value for key,value in enumerate(args) if value != 0}
+            
         
     def __len__(self):
-        return len(self.sparse_array)
+        return self.length
     
     def __getitem__(self, index):
         if index >= len(self):
             IndexError()
-        return self.sparse_array[index]
+        if index < 0:
+            index += self.length + 1
+        return self.dict[index] if index in self.dict else 0
     
     def __setitem__(self, index, value):
         if index >= len(self):
             IndexError()
         if value != 0:
-            self.sparse_array[index] = value
-            return
+            self.dict[index] = value
         
     def __delitem__(self, index):
-        del self.sparse_array[index]
+        if index in self.dict:
+            del self.dict[index]
         
     def append(self, value):
         if value != 0:
-            self.sparse_array.append(value)
-            
-            
+            self.length += 1
+            self.dict[self.length] = value
+    
 sa = SparseArray([1,2,0,0,0,0,3,0,0,4])
 print(len(sa))
 print(sa[0])

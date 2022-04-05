@@ -5,19 +5,15 @@ from CircleExercise import Circle
 
 @pytest.fixture
 def circle():
-    return Circle(5)
+    return Circle(radius=5)
 
 
 def test_circle_init():
-    circle = Circle(5)
+    circle = Circle(radius=5)
     assert circle.radius == 5
     assert circle.diameter == 10
     assert circle.area == pi*circle.radius ** 2
-    circle_diameter = Circle(diameter=10)
-    assert circle_diameter.radius == 5
-    assert circle_diameter.diameter == 10
-    assert circle_diameter.area == pi*circle_diameter.radius ** 2
-    circle_all = Circle(5,654)
+    circle_all = Circle.from_diameter(diameter=10)
     assert circle_all.radius == 5
     assert circle_all.diameter == 10
     assert circle_all.area == pi*circle_all.radius ** 2
@@ -41,11 +37,11 @@ def test_circle_eq(circle):
     
 def test_circle_gt(circle):
     circle_one = circle
-    circle_two = Circle(10)
+    circle_two = Circle(radius=10)
     assert circle_two > circle_one
     
 def test_circle_sort():
-    circle_list = [Circle(24), Circle(15), Circle(43), Circle(27), Circle(21), Circle(30)]
+    circle_list = [Circle(radius=24), Circle(radius=15), Circle(radius=43), Circle(radius=27), Circle(radius=21), Circle(radius=30)]
     circle_list.sort()
     assert circle_list[0].radius == 15
     assert circle_list[1].radius == 21
